@@ -2,14 +2,14 @@
 import React from 'react'
 import { useParams } from 'react-router-dom' /* se usa en el cazo de que la url para acceder a este componente tenga mas parametros */
 /* Gracias a useParams nos permitira devolver el ID */
+import Loading from '../components/Loading';
 import { useState,useEffect } from 'react'
 import { obtenerProductoXId } from "../services/productosService";
-import Loading from '../components/Loading';
 
 
 export default function ProductoView(){
 
-    const [producto, setProduct] = useState({});
+    const [producto, setProduct] = useState([]);
     const [load, setLoad] = useState(true);
     const {id} = useParams();
 
@@ -17,19 +17,15 @@ export default function ProductoView(){
 
     const getProducto = async()=>{
         try{
-            
-            let productoObtenido = await obtenerProductoXId(id); /* se pasa como parametro el useParams */
-            console.log(id,"Este es el id");
-            console.log(producto);
-            console.log(productoObtenido, "este es de la funcion del otro arcchivo");
-            setProduct(productoObtenido);
-            console.log("Este es el use state",producto);
-            setLoad(false);
+            let productoObtenido = await obtenerProductoXId(id);
+            setLoad(false)
+            setProduct(productoObtenido.data);
+        
+             /* se pasa 
+            como parametro el useParams */
             /*termina de cargar los datos */
-
-        }catch{
-            
-            console.log("Error");
+        }catch(err){
+            console.log(err)
         }
     }
 
@@ -42,25 +38,24 @@ export default function ProductoView(){
   return (
     <div>
         {load ? (<Loading/>): (
-            
-        <div>
-            <div className='container'>
-                <div className='row mt-3'>
-                    <div className='col-6 col-lg-3'> 
-                        <div>
-                            <img src={producto.prod_imagen} alt={producto.prod_imagen} className='card-img-top'>
-
+            <div>
+                <div className='container'>
+                    <h2>{producto.prod_nombre}</h2>
+                    <div className='row'>
+                        <div className='col-sm-12 col-md-6'>
+                            <img className='img-fluid' src={producto.prod_imagen} alt={producto.prod_imagen}>
                             </img>
                         </div>
-                        <div className='card-body'>
-                            <h6 className='card-title'>{producto.prod_nombre}ss</h6>
+                        <div className='col-sm-12 col-md-6'>
+                            <h5 className='fw-bold'>Descripción</h5>
+                            <p>{producto.prod_descripcion}</p>
+                            <div className='py-3 d-flex justify-content-between'>
+                                <span>$ {producto.prod_precio}</span>
+                            </div>
                         </div>
-                        <span className='fw-bold'>{producto.prod_precio}</span>
                     </div>
                 </div>
             </div>
-
-        </div>
         )}
         {/* pregunta ?, si es verdad: si es falso */}
     </div>

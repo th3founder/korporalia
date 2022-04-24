@@ -1,8 +1,8 @@
 import { useState,useEffect } from "react";
 import { obtenerProductos, obtenerProductosXId} from "../services/productosService";
 import GroupProducts from "../components/GroupProducts";
-
 import React from 'react'
+import CustomCarruzel from "../components/CustomCarruzel";
 
 export default function PortadaView() {
 
@@ -23,10 +23,12 @@ export default function PortadaView() {
         getProductos();
     },[]); //Los corchetes son para que no se haga bucle
 
+
     console.log(productos,"Hola");
 
   return (
     <div>
+        <CustomCarruzel/>        
         <GroupProducts productos={productos}/>
     </div>
   )

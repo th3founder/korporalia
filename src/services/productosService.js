@@ -33,6 +33,7 @@ const obtenerProductoXId = async(id) =>{
     }
 }
 
+
 export{
     obtenerProductos,obtenerProductoXId    
 }
