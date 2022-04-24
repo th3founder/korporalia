@@ -6,56 +6,34 @@ import { obtenerProductos,obtenerProductoXId } from '../services/productosServic
 export default function CustomCarruzel() {
 
     const [data, setdata] = useState([]);
-    const [aleatorio,setAleatorio] = useState();
-
-    const [img, setImg] = useState([]);
-
-
-
 
     const showData = async()=>{
         try{
             let obtenData = await obtenerProductos();
             setdata(obtenData);
 
-/*             for (let index = 0; index <=3; index++) {
-                let imgaenPorObtener = await obtenerProductoXId(id);
-                setImg(imgaenPorObtener.data);
-            }
 
- */
-            console.log("data de carruzel",data);
         }catch(err){
             console.log("Error")
         }
     }
 
-
-
-    const getImagen = async()=>{
-        try{
-            for (let index = 1; index <= 3; index++) {
-                const aleatorio = Math.floor(Math.random() * ((data.length-1)-0));
-                let productoObtenido = await obtenerProductoXId(aleatorio);
-                setImg(productoObtenido.data)
-            }        
-             /* se pasa 
-            como parametro el useParams */
-            /*termina de cargar los datos */
-        }catch(err){
-            console.log(err)
-        }
+    const imgs = [];
+    for (let index = 0; index <=2; index++) {
+        const aleatorio = Math.floor(Math.random()* (data.length - 0)+ 0);
+        imgs.push(data[aleatorio]);
     }
+
+    /* Al momento de ejecutar el programa hago un cambio y me permite ver las imagenes pero al momento de recargar ahora arroja error*/
 
     useEffect(() => {
         showData();
-        getImagen();
-     }, []);
+    }, []);
 
-     console.log(data, "datos carru");
-     console.log(img, "imagen")
+    console.log(data, "datos carru");
+    console.log(imgs);
 
-
+    
   return (
     <div style={{
         width:"300px",
@@ -63,19 +41,18 @@ export default function CustomCarruzel() {
         margin:"auto"
     }}>
     <Carousel>
-        {}
-        {img.map((prod,key)=>(
-        <Carousel.Item key={key}>
-        <img
-            className="d-block w-100 h-100"
-            src={prod.pro_imagen}
-            alt="First slide"
-        />
-        <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-        </Carousel.Item>
+        {imgs.map((imaP, key)=>(
+            <Carousel.Item key={key}>
+            <img
+                className="d-block w-100 h-100"
+                src={imaP.prod_imagen}
+                alt="First slide"
+            />
+            <Carousel.Caption>
+                <h3>First slide label </h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </Carousel.Caption>
+            </Carousel.Item>
         ))}
     </Carousel>
     </div>
