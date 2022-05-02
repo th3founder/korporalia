@@ -18,7 +18,7 @@ export default function GroupProducts({productos}) {
                         <div className='card-body'>
                             <h6 className='card-title'>{prod.prod_nombre}</h6>
                         </div>
-                        <span className='fw-bold'>S/{prod.prod_precio}</span>
+                        <span className='fw-bold'>$/{prod.prod_precio}</span>
                     </div>
                 ))}
             </div>

@@ -3,8 +3,9 @@ import React from 'react'
 import { useParams } from 'react-router-dom' /* se usa en el cazo de que la url para acceder a este componente tenga mas parametros */
 /* Gracias a useParams nos permitira devolver el ID */
 import Loading from '../components/Loading';
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useContext } from 'react'
 import { obtenerProductoXId } from "../services/productosService";
+import {CarritoContext} from '../Context/carritoContext';
 
 
 export default function ProductoView(){
@@ -13,7 +14,11 @@ export default function ProductoView(){
     const [load, setLoad] = useState(true);
     const {id} = useParams();
 
+    const {anadirACarrito} = useContext(CarritoContext);/* Estamos accediendo a un estado global */
+    /* Cuando se use un useContext la variable a almacenarlo debe ir entre parentesis */
     
+    console.log(anadirACarrito);
+
 
     const getProducto = async()=>{
         try{
@@ -27,6 +32,10 @@ export default function ProductoView(){
         }catch(err){
             console.log(err)
         }
+    }
+
+    const anadirACarritoContext = () =>{
+        anadirACarrito(producto)
     }
 
     useEffect(()=>{
@@ -51,6 +60,10 @@ export default function ProductoView(){
                             <p>{producto.prod_descripcion}</p>
                             <div className='py-3 d-flex justify-content-between'>
                                 <span>$ {producto.prod_precio}</span>
+                                <button className='btn btn-dark btn-lg' onClick={anadirACarritoContext}>
+                                <i className="fa fa-shopping-cart"></i>
+                                    Agregar al carrito
+                                </button>
                             </div>
                         </div>
                     </div>

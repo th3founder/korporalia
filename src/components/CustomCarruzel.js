@@ -1,38 +1,31 @@
 import React from 'react'
 import { Carousel } from 'react-bootstrap'
 import { useState,useEffect } from 'react';
-import { obtenerProductos,obtenerProductoXId } from '../services/productosService'
+import { obtenerProductos,obtenerProductoXId,obtenerImagenes } from '../services/productosService'
 
 export default function CustomCarruzel() {
 
     const [data, setdata] = useState([]);
 
-    const showData = async()=>{
+
+    const getData = async()=>{
         try{
-            let obtenData = await obtenerProductos();
+            let obtenData = await obtenerImagenes();
             setdata(obtenData);
-
-
+            
         }catch(err){
-            console.log("Error")
+            console.log("Error");
         }
     }
 
-    const imgs = [];
-    for (let index = 0; index <=2; index++) {
-        const aleatorio = Math.floor(Math.random()* (data.length - 0)+ 0);
-        imgs.push(data[aleatorio]);
-    }
 
     /* Al momento de ejecutar el programa hago un cambio y me permite ver las imagenes pero al momento de recargar ahora arroja error*/
 
     useEffect(() => {
-        showData();
+        getData();
     }, []);
 
-    console.log(data, "datos carru");
-    console.log(imgs);
-
+    console.log("data del capitan",data);
     
   return (
     <div style={{
@@ -41,7 +34,7 @@ export default function CustomCarruzel() {
         margin:"auto"
     }}>
     <Carousel>
-        {imgs.map((imaP, key)=>(
+        {data.map((imaP, key)=>(
             <Carousel.Item key={key}>
             <img
                 className="d-block w-100 h-100"

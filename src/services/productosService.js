@@ -33,7 +33,31 @@ const obtenerProductoXId = async(id) =>{
     }
 }
 
+const obtenerImagenes = async() =>{
+    try{
+       //Intenta ejecutar este bloque de codigo
+       //Equivalente al .then
+       //Para usar el await debe de utilizarse dentro de un bloque que sea de async
+       let {data} = await axios.get(URL);
+       let almacen = data
+       const imgs=[];
+        for (let index = 0; index <=2; index++) {
+            let aleatorio = Math.floor(Math.random()*((almacen.length)-0)+0);
+            imgs.push(almacen[aleatorio]);
+            console.log("obtener data:",imgs);
+        }
+       return imgs
+
+    }catch{
+        //Si hay errores captura ese error
+        console.log('error no data')
+        console.log(URL);
+    }
+}
+
+
+
 
 export{
-    obtenerProductos,obtenerProductoXId    
+    obtenerProductos,obtenerProductoXId,obtenerImagenes   
 }
