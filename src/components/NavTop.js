@@ -22,7 +22,7 @@ export default function NavTop() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link>
-            <Link to={"/"}>Home</Link>
+            <Link to={"/"}>Home</Link>{/* Para que funcione el to, se utiliza el import de Link */}
           </Nav.Link>
           <Nav.Link>
             <Link to="/carrito">Carrito</Link>
