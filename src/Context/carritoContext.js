@@ -9,11 +9,11 @@ export const CarritoContext = createContext() /* creamos el contexto para ingres
 const CarritoContextProvider = (props) =>{
 
     const [carrito, setCarrito] = useState([])
-
+    
     const anadirACarrito = (producto) =>{
 
         for (let index = 0; index < carrito.length; index++) { /* for para agregar x cantidad de veces que se agrego un mismo carrito */
-            if(carrito[index].prod_id === producto.prod_id){/* Aqui significa que tenemos el producto ya adentro del carrito */
+            if(carrito[index].product_id === producto.product_id){/* Aqui significa que tenemos el producto ya adentro del carrito */
 
                 const productoExistente = {
                     ...carrito[index],

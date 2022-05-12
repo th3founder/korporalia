@@ -6,6 +6,8 @@ import Loading from '../components/Loading';
 import { useState,useEffect,useContext } from 'react'
 import { obtenerProductoXId } from "../services/productosService";
 import {CarritoContext} from '../Context/carritoContext';
+import Swal from 'sweetalert2';
+import {useNavigate} from 'react-router-dom' /* Es como el link: to, redirige */
 
 
 export default function ProductoView(){
@@ -13,6 +15,7 @@ export default function ProductoView(){
     const [producto, setProduct] = useState([]);
     const [load, setLoad] = useState(true);
     const {id} = useParams();
+    const navigate = useNavigate();
 
     const {anadirACarrito} = useContext(CarritoContext);/* Estamos accediendo a un estado global */
     /* Cuando se use un useContext la variable a almacenarlo debe ir entre parentesis */
@@ -36,6 +39,22 @@ export default function ProductoView(){
 
     const anadirACarritoContext = () =>{
         anadirACarrito(producto)
+
+        const resultadoAgregar = Swal.fire({ 
+            /* Lanza mensaje cuando se agrega algo al carrito */
+            icon:'success',
+            title:'Producto añadido',
+            showConfirmButton:true,
+            showDenyButton:true,
+            confirmButtonText:'Seguir comprando',
+            denyButtonText:'Ir a carrito'
+        }).then((resultado)=>{ /* Aqui redirigimos a los sitios */
+            if(resultado.isConfirmed){
+                navigate('/')
+            }else if(resultado.isDenied){
+                navigate('/carrito')
+            }
+        })
     }
 
     useEffect(()=>{

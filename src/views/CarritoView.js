@@ -9,7 +9,7 @@ export default function CarritoView() {
     
 
     return (
-    <div>
+    <div className='container'>
         <div className='container'>
             <div className='my-4 text-center'>
                 <h1>
